@@ -1,0 +1,49 @@
+﻿<Page
+    x:Class="ListViewItemsClickTets.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:ListViewItemsClickTets"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    xmlns:i="using:Microsoft.Xaml.Interactivity"
+    xmlns:ic="using:Microsoft.Xaml.Interactions.Core"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Page.DataContext>
+        <local:TestViewModel/>
+    </Page.DataContext>
+
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+        <ListView Name="HeaderList"  ItemsSource="{Binding Items}" >
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Border Background="Bisque">
+                            <TextBlock Text="{Binding Test}"/>
+                        </Border>
+
+                        <ListView Name="SubItemsList" ItemsSource="{Binding SubItems}" 
+                                   IsItemClickEnabled="True" 
+                                   SelectedItem="{Binding SelectItme,Mode=TwoWay}" >
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Vertical">
+                                        <TextBlock Text="{Binding }"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+
+                            <i:Interaction.Behaviors >
+                                <ic:EventTriggerBehavior  EventName="ItemClick">
+                                    <ic:InvokeCommandAction  Command="{Binding ItemCommand}" CommandParameter="{Binding}" />
+                                </ic:EventTriggerBehavior>
+                            </i:Interaction.Behaviors>
+                        </ListView>
+                    </Grid>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+    </Grid>
+</Page>
